@@ -280,18 +280,6 @@ flutter build appbundle --release
 flutter build ios --release
 ```
 
-## 💰 Biaya & Limitasi
-
-### OpenAI API Usage
-- **GPT-3.5-turbo**: ~$0.002 per 1K tokens
-- **Rate limits**: 3,500 requests per minute
-- **Monitoring**: Dashboard untuk tracking usage
-
-### Optimisasi Biaya
-- Caching AI responses untuk pertanyaan umum
-- Token limit management
-- User session optimization
-
 ## 🔒 Keamanan & Privacy
 
 ### Data Protection
@@ -319,53 +307,23 @@ Distributed under the MIT License. See `LICENSE` for more information.
 
 ## 👥 Tim Developer
 
-- **RebelZi** - Lead Developer & AI Integration Specialist
-- **Frontend Developer** - Flutter UI/UX Implementation
-- **Backend Integration** - API Integration & State Management
-- **UI/UX Designer** - Design System & User Experience
+- **Rebelzi** - Lead Mobile Developer & AI Integration Specialist
+- **Icha** - UI/UX Designer & Design System Specialist
+- **Eca** - UI/UX Designer & User Experience Specialist
 
 ## 📞 Support
 
 Jika Anda mengalami masalah atau memiliki pertanyaan:
 
 - Buat issue di GitHub repository
-- Email: support@dishdiscovery.rebelzi.dev
-- AI Support: ai-help@dishdiscovery.rebelzi.dev
-- Developer: contact@rebelzi.dev
+- Email: firdauschuzaeni@fclabs.my.id
+- Developer: contact@fclabs.my.id
 - Documentation: [Wiki Pages](https://github.com/rebelzi/dish_discover/wiki)
-
-## 🔮 Roadmap
-
-### Version 2.0
-- [x] Chef AI assistant integration
-- [x] Natural language recipe search
-- [ ] Offline AI suggestions
-- [ ] Voice interaction dengan AI
-- [ ] AI-powered meal planning
-- [ ] Personalized nutrition tracking
-
-### Version 3.0
-- [ ] Advanced AI features (image recognition)
-- [ ] Smart grocery list generation
-- [ ] AI cooking timer dan reminders
-- [ ] Social features dengan AI moderation
-- [ ] Multi-language AI support
-- [ ] AR cooking assistance
-
-### AI Enhancements
-- [ ] Computer vision untuk ingredient recognition
-- [ ] Voice-to-text recipe input
-- [ ] AI-generated recipe variations
-- [ ] Smart kitchen appliance integration
-- [ ] Predictive cooking suggestions
-
 ---
 
 <div align="center">
 
-## 💖 Made with Love by RebelZi 2025
-
-**🤖 Powered by AI - Making cooking smarter and more enjoyable!** 🍳
+## 💖 Made with Love by Rebelzi 2025
 
 **⭐ Jangan lupa untuk memberikan star jika project ini membantu Anda!** ⭐
 
