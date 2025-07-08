@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "531039253129",
+    "project_id": "dish-discover-e2201",
+    "storage_bucket": "dish-discover-e2201.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:531039253129:android:bd98d60599c7ccc10d4c58",
+        "android_client_info": {
+          "package_name": "com.example.dish_discover"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "531039253129-ca6enp9pqe6r3sclo73v9r3v5ct8hdso.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.dish_discover",
+            "certificate_hash": "ded89fdef55d18b88a09e13cf6436110f0cfbe55"
+          }
+        },
+        {
+          "client_id": "531039253129-unqih823hnp0o6d1m0md6fovmmh75hsk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAsfFOPwFI0VhgJSIRhaoXOPLQGCmFuAFI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "531039253129-unqih823hnp0o6d1m0md6fovmmh75hsk.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
