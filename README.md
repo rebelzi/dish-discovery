@@ -46,7 +46,8 @@ Dish Discovery adalah aplikasi mobile Flutter yang memungkinkan pengguna untuk m
 - **Dart** - Bahasa pemrograman
 
 ### AI & Machine Learning
-- **OpenAI GPT API** - AI assistant untuk Chef AI functionality
+- **Firebase AI** - AI assistant untuk Chef AI functionality
+- **flutter_ai_toolkit: ^0.9.1** - Package untuk integrasi AI dengan Firebase
 - **Natural Language Processing** - Pemrosesan bahasa alami untuk chat interface
 - **Machine Learning Models** - Model untuk rekomendasi dan personalisasi
 
@@ -57,8 +58,7 @@ Dish Discovery adalah aplikasi mobile Flutter yang memungkinkan pengguna untuk m
 ### HTTP & API
 - **http** - HTTP client untuk API calls
 - **TheMealDB API** - External API untuk data resep
-- **OpenAI API** - API untuk AI assistant features
-- **dio** - Advanced HTTP client untuk AI API integration
+- **Firebase AI API** - API untuk AI assistant features
 
 ### UI/UX
 - **Google Fonts** - Typography yang menarik
@@ -71,11 +71,6 @@ Dish Discovery adalah aplikasi mobile Flutter yang memungkinkan pengguna untuk m
 - **Firebase Authentication** - Backend authentication
 - **Google Sign-In** - OAuth integration
 
-### Storage
-- **Shared Preferences** - Local storage untuk user preferences
-- **Hive** - Local database untuk offline AI suggestions
-- **SQLite** - Database untuk chat history
-
 ## 📋 Prasyarat
 
 Sebelum menjalankan aplikasi, pastikan Anda sudah menginstall:
@@ -85,7 +80,7 @@ Sebelum menjalankan aplikasi, pastikan Anda sudah menginstall:
 - Android Studio / VS Code
 - Android Emulator atau iOS Simulator
 - Git
-- **OpenAI API Key** - Untuk fitur Chef AI
+- **Firebase Project** - Untuk authentication dan AI features
 
 ## 🚀 Instalasi & Setup
 
@@ -100,28 +95,37 @@ Sebelum menjalankan aplikasi, pastikan Anda sudah menginstall:
    flutter pub get
    ```
 
-3. **Setup Firebase** (untuk authentication)
+3. **Setup Firebase** (untuk authentication dan AI)
    - Buat project baru di [Firebase Console](https://console.firebase.google.com/)
    - Tambahkan aplikasi Android/iOS
    - Download `google-services.json` (Android) atau `GoogleService-Info.plist` (iOS)
    - Letakkan file konfigurasi di direktori yang sesuai
    - Aktifkan Authentication dan Google Sign-In di Firebase Console
+   - **Aktifkan Firebase AI** di Firebase Console
+   - **Setup Vertex AI** untuk AI capabilities
 
-4. **Setup OpenAI API** (untuk Chef AI)
-   - Daftar di [OpenAI Platform](https://platform.openai.com/)
-   - Dapatkan API key
-   - Buat file `.env` di root project:
-   ```env
-   OPENAI_API_KEY=your_openai_api_key_here
-   OPENAI_MODEL=gpt-3.5-turbo
-   ```
+4. **Setup Firebase AI** (untuk Chef AI)
+   - Buka Firebase Console > Project Settings
+   - Navigate ke tab "General" > "Your apps"
+   - Pastikan Firebase AI sudah diaktifkan
+   - Configure AI model preferences
 
 5. **Konfigurasi API**
    - Aplikasi menggunakan TheMealDB API yang gratis
    - Base URL TheMealDB: `https://www.themealdb.com/api/json/v1/1/`
-   - Base URL OpenAI: `https://api.openai.com/v1/`
+   - Firebase AI: Automatic configuration melalui Firebase SDK
 
-6. **Run aplikasi**
+6. **Dependencies Configuration**
+   Pastikan `pubspec.yaml` include:
+   ```yaml
+   dependencies:
+     flutter_ai_toolkit: ^latest_version
+     firebase_core: ^latest_version
+     firebase_auth: ^latest_version
+     cloud_firestore: ^latest_version
+   ```
+
+7. **Run aplikasi**
    ```bash
    flutter run
    ```
@@ -134,11 +138,9 @@ lib/
 │   ├── auth/                      # Authentication BLoC
 │   ├── meal/                      # Meal list BLoC
 │   ├── meal_detail/               # Meal detail BLoC
-│   └── chef_ai/                   # Chef AI BLoC
 ├── models/                        # Data models
 │   ├── model_list_meal.dart       # Meal list model
 │   ├── meal_detail_model.dart     # Meal detail model
-│   └── ai_message_model.dart      # AI chat message model
 ├── pages/                         # Screen/Page widgets
 │   ├── auth/                      # Authentication pages
 │   ├── custom/                    # Custom widgets
@@ -147,15 +149,8 @@ lib/
 │   └── chef_ai_page.dart          # Chef AI chat screen
 ├── repository/                    # Data layer
 │   ├── list_meals_controller.dart # API service
-│   └── ai_service.dart            # OpenAI API service
-├── services/                      # Business services
-│   ├── ai_chat_service.dart       # AI chat functionality
-│   └── recommendation_service.dart # AI recommendation engine
 ├── theme/                         # App theming
 │   └── theme.dart                 # Color schemes & themes
-├── utils/                         # Utilities
-│   ├── constants.dart             # App constants
-│   └── ai_prompts.dart            # AI prompt templates
 └── main.dart                      # App entry point
 ```
 
@@ -166,7 +161,12 @@ lib/
 - **Search meals**: `GET /search.php?s={query}`
 - **Get meal details**: `GET /lookup.php?i={mealId}`
 
-## 🤖 Fitur Chef AI
+### Firebase AI
+- **Chat Completions**: Handled by `flutter_ai_toolkit`
+- **Model Management**: Firebase Console configuration
+- **Real-time responses**: Firebase AI integration
+
+## 🤖 Fitur Chef AI (Firebase AI)
 
 ### AI Assistant Capabilities
 1. **Recipe Recommendations**
@@ -185,9 +185,27 @@ lib/
    - Saran untuk diet sehat
 
 4. **Interactive Chat**
-   - Natural language conversation
-   - Context-aware responses
+   - Natural language conversation menggunakan `flutter_ai_toolkit`
+   - Context-aware responses dari Firebase AI
    - Personalized cooking advice
+
+### Firebase AI Integration
+```dart
+// Example usage dengan flutter_ai_toolkit
+import 'package:flutter_ai_toolkit/flutter_ai_toolkit.dart';
+
+class ChefAIService {
+  final FirebaseVertexAI _vertexAI = FirebaseVertexAI.instance;
+  
+  Future<String> getCookingAdvice(String userMessage) async {
+    final model = _vertexAI.generativeModel(model: 'gemini-pro');
+    final prompt = 'You are a professional chef assistant. $userMessage';
+    
+    final response = await model.generateContent([Content.text(prompt)]);
+    return response.text ?? 'Maaf, saya tidak bisa membantu saat ini.';
+  }
+}
+```
 
 ### AI Prompt Examples
 ```
@@ -198,54 +216,64 @@ User: "Bagaimana cara membuat nasi goreng yang enak?"
 AI: "Berikut tips untuk nasi goreng yang sempurna: 1. Gunakan nasi yang sudah dingin..."
 ```
 
-## 📱 Screenshots
-
-### Home Screen
-- Grid layout menampilkan resep populer
-- Search bar untuk pencarian resep
-- Carousel slider untuk highlight resep
-- **Quick access ke Chef AI assistant**
-
-### Chef AI Screen
-- **Chat interface yang intuitif**
-- **Typing indicators dan loading animations**
-- **Quick action buttons untuk pertanyaan umum**
-- **Recipe suggestions dengan preview images**
-
-### Detail Screen
-- Gambar resep berkualitas tinggi
-- Informasi kategori dan area
-- Daftar bahan-bahan dengan takaran
-- Instruksi memasak step-by-step
-- **"Ask AI" button untuk bantuan cooking**
-
-### Search Feature
-- Real-time search results
-- Empty state handling
-- Error state dengan retry option
-- **AI-powered search suggestions**
-
 ## 🔧 Konfigurasi
-
-### Environment Variables
-```env
-OPENAI_API_KEY=your_openai_api_key
-OPENAI_MODEL=gpt-3.5-turbo
-OPENAI_MAX_TOKENS=1000
-AI_TEMPERATURE=0.7
-```
 
 ### Firebase Configuration
 1. Setup Firebase project
 2. Enable Authentication
 3. Configure Google Sign-In
-4. Add platform-specific configuration files
+4. **Enable Vertex AI API**
+5. **Configure AI model preferences**
+6. Add platform-specific configuration files
 
-### AI Configuration
-1. Setup OpenAI account
-2. Generate API key
-3. Configure rate limits
-4. Set up usage monitoring
+### AI Configuration (Firebase AI)
+1. Setup Firebase project dengan AI enabled
+2. Configure Vertex AI permissions
+3. Set up usage monitoring
+4. Configure rate limits
+5. Setup AI model preferences (Gemini Pro recommended)
+
+### flutter_ai_toolkit Configuration
+```dart
+// main.dart
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  
+  // Initialize AI Toolkit
+  await FirebaseVertexAI.instance.initialize();
+  
+  runApp(const MyApp());
+}
+```
+
+## 💰 Biaya & Limitasi
+
+### Firebase AI Usage
+- **Vertex AI Pricing**: Pay-per-use model
+- **Gemini Pro**: ~$0.00025 per 1K characters input
+- **Rate limits**: Configure di Firebase Console
+- **Monitoring**: Firebase Usage dashboard
+
+### Optimisasi Biaya
+- Caching AI responses untuk pertanyaan umum
+- Character limit management
+- User session optimization
+- Implement request batching
+
+## 🔒 Keamanan & Privacy
+
+### Data Protection
+- Chat history disimpan di Firebase Firestore dengan encryption
+- User data protection sesuai Firebase security rules
+- User consent untuk AI features
+- Automatic data cleanup policies
+
+### API Security
+- Firebase security rules untuk AI access
+- User authentication required untuk AI features
+- Request rate limiting via Firebase
+- Error handling yang aman
 
 ## 🧪 Testing
 
@@ -256,60 +284,12 @@ flutter test
 # Run integration tests
 flutter test integration_test/
 
-# Run AI service tests
-flutter test test/services/ai_service_test.dart
+# Run Firebase AI service tests
+flutter test test/services/firebase_ai_service_test.dart
 
 # Generate test coverage
 flutter test --coverage
 ```
-
-## 📦 Build & Release
-
-### Android
-```bash
-# Build APK
-flutter build apk --release
-
-# Build App Bundle
-flutter build appbundle --release
-```
-
-### iOS
-```bash
-# Build iOS
-flutter build ios --release
-```
-
-## 🔒 Keamanan & Privacy
-
-### Data Protection
-- Enkripsi chat history lokal
-- No personal data sent ke OpenAI
-- User consent untuk AI features
-- Automatic data cleanup
-
-### API Security
-- Environment variables untuk API keys
-- Request rate limiting
-- Error handling yang aman
-
-## 🤝 Contributing
-
-1. Fork repository
-2. Buat feature branch (`git checkout -b feature/chef-ai-improvement`)
-3. Commit perubahan (`git commit -m 'Add chef AI feature'`)
-4. Push ke branch (`git push origin feature/chef-ai-improvement`)
-5. Buat Pull Request
-
-## 📄 License
-
-Distributed under the MIT License. See `LICENSE` for more information.
-
-## 👥 Tim Developer
-
-- **Rebelzi** - Lead Mobile Developer & AI Integration Specialist
-- **Icha** - UI/UX Designer & Design System Specialist
-- **Eca** - UI/UX Designer & User Experience Specialist
 
 ## 📞 Support
 
@@ -319,17 +299,18 @@ Jika Anda mengalami masalah atau memiliki pertanyaan:
 - Email: firdauschuzaeni@fclabs.my.id
 - Developer: contact@fclabs.my.id
 - Documentation: [Wiki Pages](https://github.com/rebelzi/dish_discover/wiki)
+
 ---
 
 <div align="center">
 
-## 💖 Made with Love by Rebelzi 2025
+## 💖 Made with Love by Dish Discovery Team
 
 **⭐ Jangan lupa untuk memberikan star jika project ini membantu Anda!** ⭐
 
 ---
 
-**© 2025 RebelZi. All rights reserved.**
+**© 2025 Dish Discovery Team. All rights reserved.**
 
 *Dish Discovery - Your AI-Powered Cooking Companion*
 
