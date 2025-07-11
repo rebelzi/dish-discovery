@@ -2,6 +2,23 @@
 
 Dish Discovery adalah aplikasi mobile Flutter yang memungkinkan pengguna untuk menemukan dan menjelajahi berbagai resep masakan dari seluruh dunia. Aplikasi ini menggunakan TheMealDB API untuk menyediakan data resep yang lengkap dan terkini, serta dilengkapi dengan fitur Chef AI yang canggih.
 
+## 📱 Download Aplikasi
+
+Untuk menginstall aplikasi, Anda bisa langsung download melalui link berikut:
+
+### 🔗 [Download Dish Discovery APK](https://www.upload-apk.com/en/skt5ZMV3EyUKK4S)
+
+> **Catatan**: Pastikan device Android Anda mengizinkan instalasi dari sumber tidak dikenal (Unknown Sources) sebelum menginstall APK.
+
+**Cara Install:**
+1. Klik link download di atas
+2. Download file APK ke device Anda
+3. Buka file APK yang sudah di-download
+4. Ikuti instruksi instalasi
+5. Buka aplikasi dan nikmati fitur-fiturnya!
+
+---
+
 ## ✨ Fitur Utama
 
 ### 🤖 Chef AI Assistant
