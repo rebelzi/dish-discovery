@@ -55,7 +55,7 @@ class _HomePageState extends State<HomePage> {
                     valueListenable: UserData.userNameNotifier,
                     builder: (context, userName, child) {
                       return Text(
-                        "Halo $userName!", // ✅ Dynamic name yang auto refresh
+                        "Halo $userName!",
                         style: GoogleFonts.poppins(
                           fontSize: 16,
                           fontWeight: FontWeight.w600,

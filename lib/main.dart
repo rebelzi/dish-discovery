@@ -14,26 +14,23 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:dish_discover/bloc/auth/auth_bloc.dart';
 
-// ✅ Updated UserData dengan ValueNotifier untuk reactive updates
 class UserData {
-  // ValueNotifier untuk auto refresh
   static ValueNotifier<String> userNameNotifier = ValueNotifier<String>("User");
   
-  // Getter untuk backward compatibility
   static String get userName => userNameNotifier.value;
 
   static void updateUserName(String newUsername) {
-    userNameNotifier.value = newUsername; // ✅ Trigger rebuild
+    userNameNotifier.value = newUsername;
   }
 
   static void updateUserData({String? name}) {
     if (name != null) {
-      userNameNotifier.value = name; // ✅ Trigger rebuild
+      userNameNotifier.value = name; 
     }
   }
 
   static void resetUserData() {
-    userNameNotifier.value = "User"; // ✅ Trigger rebuild
+    userNameNotifier.value = "User";
   }
 }
 
