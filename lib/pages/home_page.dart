@@ -1,5 +1,6 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:dish_discover/bloc/meal/meal_bloc.dart';
+import 'package:dish_discover/main.dart';
 import 'package:dish_discover/pages/custom/custom_card_menu.dart';
 import 'package:dish_discover/pages/custom/custom_carousel_widget.dart';
 import 'package:dish_discover/theme/theme.dart';
@@ -35,7 +36,7 @@ class _HomePageState extends State<HomePage> {
     final width = MediaQuery.of(context).size.width;
 
     return Scaffold(
-      backgroundColor: AppColors.secondary,
+      backgroundColor: AppColors.primary,
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -50,13 +51,18 @@ class _HomePageState extends State<HomePage> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    "Halo Daus!",
-                    style: GoogleFonts.poppins(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w600,
-                      color: Colors.black,
-                    ),
+                  ValueListenableBuilder<String>(
+                    valueListenable: UserData.userNameNotifier,
+                    builder: (context, userName, child) {
+                      return Text(
+                        "Halo $userName!", // ✅ Dynamic name yang auto refresh
+                        style: GoogleFonts.poppins(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600,
+                          color: Colors.black,
+                        ),
+                      );
+                    },
                   ),
                   SizedBox(height: height * 0.001),
                   Text(
@@ -128,7 +134,7 @@ class _HomePageState extends State<HomePage> {
                     style: GoogleFonts.poppins(
                       fontSize: 20,
                       fontWeight: FontWeight.w600,
-                      color: Color(0xFF5C5959),
+                      color: Colors.black,
                     ),
                   ),
                   BlocBuilder<MealBloc, MealState>(
@@ -153,7 +159,7 @@ class _HomePageState extends State<HomePage> {
                                   Icon(
                                     Icons.search_off,
                                     size: 80,
-                                    color: Colors.grey[400],
+                                    color: Colors.black,
                                   ),
                                   SizedBox(height: 20),
                                   Text(
@@ -163,7 +169,7 @@ class _HomePageState extends State<HomePage> {
                                     style: GoogleFonts.poppins(
                                       fontSize: 16,
                                       fontWeight: FontWeight.w500,
-                                      color: Colors.grey[600],
+                                      color: Colors.black,
                                     ),
                                     textAlign: TextAlign.center,
                                   ),
@@ -172,7 +178,7 @@ class _HomePageState extends State<HomePage> {
                                     "Coba kata kunci lain atau lihat resep populer",
                                     style: GoogleFonts.poppins(
                                       fontSize: 14,
-                                      color: Colors.grey[500],
+                                      color: Colors.black54,
                                     ),
                                     textAlign: TextAlign.center,
                                   ),
@@ -188,7 +194,7 @@ class _HomePageState extends State<HomePage> {
                                     icon: Icon(Icons.refresh),
                                     label: Text("Lihat Resep Populer"),
                                     style: ElevatedButton.styleFrom(
-                                      backgroundColor: AppColors.primary,
+                                      backgroundColor: Colors.black,
                                       foregroundColor: Colors.white,
                                       padding: EdgeInsets.symmetric(
                                         horizontal: 20,

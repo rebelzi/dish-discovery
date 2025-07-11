@@ -1,8 +1,10 @@
 import 'package:dish_discover/bloc/auth/auth_bloc.dart';
 import 'package:dish_discover/bloc/auth/auth_event.dart';
 import 'package:dish_discover/bloc/auth/auth_state.dart';
+import 'package:dish_discover/main.dart';
 import 'package:dish_discover/pages/auth/login_page.dart';
 import 'package:dish_discover/pages/custom/custom_menu_profile.dart';
+import 'package:dish_discover/pages/profile/edit_profile_page.dart';
 import 'package:dish_discover/theme/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -16,7 +18,7 @@ class ProfilePage extends StatelessWidget {
     final height = MediaQuery.of(context).size.height;
     final width = MediaQuery.of(context).size.width;
     return Scaffold(
-      backgroundColor: AppColors.secondary,
+      backgroundColor: AppColors.primary,
       body: Column(
         children: [
           // start header profile
@@ -24,7 +26,7 @@ class ProfilePage extends StatelessWidget {
             height: height * 0.3,
             width: double.infinity,
             decoration: BoxDecoration(
-              color: AppColors.primary,
+              color: Colors.white,
               borderRadius: BorderRadius.only(
                 bottomLeft: Radius.circular(30),
                 bottomRight: Radius.circular(30),
@@ -40,13 +42,18 @@ class ProfilePage extends StatelessWidget {
                   backgroundColor: Colors.transparent,
                 ),
                 SizedBox(height: height * 0.01),
-                Text(
-                  "Daus",
-                  style: GoogleFonts.poppins(
-                    fontSize: 20,
-                    fontWeight: FontWeight.w600,
-                    color: Colors.black,
-                  ),
+                ValueListenableBuilder<String>(
+                  valueListenable: UserData.userNameNotifier,
+                  builder: (context, userName, child) {
+                    return Text(
+                      userName,
+                      style: GoogleFonts.poppins(
+                        fontSize: 20,
+                        fontWeight: FontWeight.w600,
+                        color: Colors.black,
+                      ),
+                    );
+                  },
                 ),
                 SizedBox(height: height * 0.005),
                 Text(
@@ -69,13 +76,13 @@ class ProfilePage extends StatelessWidget {
                 title: 'Edit Profile',
                 icon: Icons.person,
                 onTap: () {
-                  // Handle profile tap
+                  Navigator.of(context, rootNavigator: true).push(
+                    MaterialPageRoute(
+                      builder: (context) =>
+                          EditProfilePage(),
+                    ),
+                  );
                 },
-              ),
-              CustomMenuProfile(
-                title: 'Ubah Password',
-                icon: Icons.lock,
-                onTap: () {},
               ),
             ],
           ),

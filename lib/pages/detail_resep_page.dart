@@ -45,7 +45,7 @@ class DetailResepPage extends StatelessWidget {
           MealDetailBloc(mealRepository: ListMealsController())
             ..add(LoadMealDetail(mealId: mealId)),
       child: Scaffold(
-        backgroundColor: AppColors.secondary,
+        backgroundColor: AppColors.primary,
         body: BlocBuilder<MealDetailBloc, MealDetailState>(
           builder: (context, state) {
             if (state is MealDetailLoading) {
@@ -167,20 +167,23 @@ class DetailResepPage extends StatelessWidget {
                             ),
                           ),
                           SizedBox(height: height * 0.015),
+                          // ✅ Updated: Added divider between ingredients
                           ...meal.ingredients.asMap().entries.map((entry) {
                             int index = entry.key;
                             String ingredient = entry.value;
                             String measure = index < meal.measures.length
                                 ? meal.measures[index]
                                 : '';
+                            bool isLastItem =
+                                index == meal.ingredients.length - 1;
 
                             return Padding(
-                              padding: EdgeInsets.only(bottom: 8),
+                              padding: EdgeInsets.symmetric(vertical: 8),
                               child: Row(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Container(
-                                    margin: EdgeInsets.only(right: 10, top: 2),
+                                    margin: EdgeInsets.only(right: 10, top: 6),
                                     width: 6,
                                     height: 6,
                                     decoration: BoxDecoration(
@@ -238,46 +241,67 @@ class DetailResepPage extends StatelessWidget {
                             ...steps.asMap().entries.map((entry) {
                               int index = entry.key;
                               String step = entry.value;
-                              return Padding(
-                                padding: EdgeInsets.only(bottom: 12),
-                                child: Row(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
+                              bool isLastStep = index == steps.length - 1;
+
+                              return Column(
+                                children: [
+                                  Padding(
+                                    padding: EdgeInsets.symmetric(vertical: 8),
+                                    child: Row(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Container(
+                                          margin: EdgeInsets.only(
+                                            right: 10,
+                                            top: 2,
+                                          ),
+                                          padding: EdgeInsets.symmetric(
+                                            horizontal: 8,
+                                            vertical: 4,
+                                          ),
+                                          decoration: BoxDecoration(
+                                            color: AppColors.primary,
+                                            borderRadius: BorderRadius.circular(
+                                              12,
+                                            ),
+                                          ),
+                                          child: Text(
+                                            '${index + 1}',
+                                            style: GoogleFonts.poppins(
+                                              fontSize: 12,
+                                              fontWeight: FontWeight.w600,
+                                              color: Colors.white,
+                                            ),
+                                          ),
+                                        ),
+                                        Expanded(
+                                          child: Text(
+                                            step,
+                                            style: GoogleFonts.poppins(
+                                              fontSize: 14,
+                                              height: 1.4,
+                                              color: Colors.black87,
+                                            ),
+                                            textAlign: TextAlign.justify,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  if (!isLastStep)
                                     Container(
+                                      height: 1,
                                       margin: EdgeInsets.only(
-                                        right: 10,
-                                        top: 2,
-                                      ),
-                                      padding: EdgeInsets.symmetric(
-                                        horizontal: 8,
-                                        vertical: 4,
+                                        left: 32,
+                                        top: 8,
+                                        bottom: 8,
                                       ),
                                       decoration: BoxDecoration(
                                         color: AppColors.primary,
-                                        borderRadius: BorderRadius.circular(12),
-                                      ),
-                                      child: Text(
-                                        '${index + 1}',
-                                        style: GoogleFonts.poppins(
-                                          fontSize: 12,
-                                          fontWeight: FontWeight.w600,
-                                          color: Colors.white,
-                                        ),
                                       ),
                                     ),
-                                    Expanded(
-                                      child: Text(
-                                        step,
-                                        style: GoogleFonts.poppins(
-                                          fontSize: 14,
-                                          height: 1.4,
-                                          color: Colors.black87,
-                                        ),
-                                        textAlign: TextAlign.justify,
-                                      ),
-                                    ),
-                                  ],
-                                ),
+                                ],
                               );
                             }).toList(),
                           ],

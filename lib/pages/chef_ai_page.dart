@@ -31,14 +31,14 @@ class ChefAiPage extends StatelessWidget {
         enableAttachments: true,
         welcomeMessage: 'Halo! Saya Asisten Chef AI. Mau masak apa hari ini? Tanya resep apapun!',
         style: LlmChatViewStyle(
-          backgroundColor: AppColors.secondary,
+          backgroundColor: AppColors.primary,
 
           progressIndicatorColor: AppColors.secondary,
 
           // bubble style ai
           llmMessageStyle: LlmMessageStyle(
             decoration: BoxDecoration(
-              color: AppColors.primary,
+              color: AppColors.secondary,
               borderRadius: BorderRadius.circular(7),
             ),
             icon: Icons.restaurant_menu,

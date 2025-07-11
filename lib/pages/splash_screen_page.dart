@@ -103,7 +103,7 @@ class _SplashScreenPageState extends State<SplashScreenPage>
                       width: screenSize.width * 0.8,
                       height: screenSize.width * 0.8,
                       decoration: const BoxDecoration(
-                        color: AppColors.secondary,
+                        color: AppColors.primary,
                         shape: BoxShape.circle,
                       ),
                     ),
